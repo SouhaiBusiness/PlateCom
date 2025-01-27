@@ -1228,7 +1228,7 @@ We also provide helpful resources such as order tracking, product guides, and FA
     {
       title: 'Best Sellers in T-Shirts',
       buttonCaption: 'Shop Now',
-      image: '/images/electronics-banner-1.jpg',
+      image: '/images/blog-4.jpg',
       url: '/search?category=T-Shirts',
       isPublished: true,
     },

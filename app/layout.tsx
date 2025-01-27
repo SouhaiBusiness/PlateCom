@@ -1,9 +1,11 @@
 import { Geist, Geist_Mono } from 'next/font/google'
-import '../globals.css'
+import './globals.css'
 import ClientProviders from '@/components/shared/client-providers'
 import { getDirection } from '@/i18n-config'
-import { NextIntlClientProvider } from 'next-intl'
-import { getMessages } from 'next-intl/server'
+//import { NextIntlClientProvider } from 'next-intl'
+//import { getMessages } from 'next-intl/server'
+import { APP_DESCRIPTION, APP_NAME, APP_SLOGAN } from '@/lib/constants'
+import { Metadata } from 'next'
 //import { routing } from '@/i18n/routing'
  
 //import { getSetting } from '@/lib/actions/setting.actions'
@@ -19,18 +21,13 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 })
 
-export  function generateMetadata() {
-  const {
-    site: { slogan, name, description, url },
-  } 
-  return {
+export const metadata: Metadata = {
+
     title: {
-      template: `%s | ${name}`,
-      default: `${name}. ${slogan}`,
+      template: `%s | ${APP_NAME}`,
+      default: `${APP_NAME}. ${APP_SLOGAN}`,
     },
-    description: description,
-    metadataBase: new URL(url),
-  }
+    description: APP_DESCRIPTION,
 }
 
 export default async function AppLayout({
@@ -47,7 +44,7 @@ export default async function AppLayout({
   // Ensure that the incoming `locale` is valid
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
  
-  const messages = await getMessages()
+ // const messages = await getMessages()
 
   return (
     <html
@@ -58,11 +55,11 @@ export default async function AppLayout({
       <body
         className={`min-h-screen ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NextIntlClientProvider locale={locale} messages={messages}>
+        
           <ClientProviders>
             {children}
           </ClientProviders>
-        </NextIntlClientProvider>
+       
       </body>
     </html>
   )

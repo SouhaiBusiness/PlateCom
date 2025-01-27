@@ -14,7 +14,7 @@ export default function CheckoutLayout({
         <div className='max-w-6xl mx-auto flex justify-between items-center'>
           <Link href='/'>
             <Image
-              src='/icons/logo.svg'
+              src='/images/icons8-ecommerce-64(1).png'
               alt='logo'
               width={70}
               height={70}

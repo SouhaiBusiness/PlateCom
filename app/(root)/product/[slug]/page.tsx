@@ -10,11 +10,13 @@ import ProductPrice from '@/components/shared/product/product-price'
 import ProductGallery from '@/components/shared/product/product-gallery'
 import { Separator } from '@/components/ui/separator'
 import ProductSlider from '@/components/shared/product/product-slider'
-import Rating from '../../../../components/shared/product/rating'
 import BrowsingHistoryList from '@/components/shared/browsing-history-list'
 import AddToBrowsingHistory from '@/components/shared/product/add-to-browsing-history'
 import AddToCart from '@/components/shared/product/add-to-cart'
 import { generateId, round2 } from '@/lib/utils'
+import RatingSummary from '@/components/shared/product/rating-summary'
+import ReviewList from './review-list'
+import { auth } from '@/auth'
  
 export async function generateMetadata(props: {
   params: Promise<{ slug: string }>
@@ -43,6 +45,8 @@ export default async function ProductDetails(props: {
 
   const { slug } = params
 
+  const session = await auth()
+
  
 
   const product = await getProductBySlug(slug)
@@ -69,10 +73,16 @@ export default async function ProductDetails(props: {
                 Brand {product.brand} {product.category}
               </p>
               <h1 className='font-bold text-lg lg:text-xl'>{product.name}</h1>
-
-              <Rating
-                rating={product.avgRating}
-              />
+                    
+                    <div className='flex items-center gap-2'>
+                       <RatingSummary
+                         avgRating={product.avgRating}
+                         numReviews={product.numReviews}
+                         asPopover
+                         ratingDistribution={product.ratingDistribution}
+                       />
+                    </div>
+              
               <Separator />
               <div className='flex flex-col gap-3 sm:flex-row sm:items-center'>
                 <div className='flex gap-3'>
@@ -146,6 +156,13 @@ export default async function ProductDetails(props: {
             </Card>
           </div>
         </div>
+      </section>
+
+      <section className='mt-10'>
+        <h2 className='h2-bold mb-2' id='reviews'>
+           Customer Reviews 
+        </h2>
+        <ReviewList product={product} userId={session?.user.id} />
       </section>
    
       <section className='mt-10'>

@@ -1,13 +1,33 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
- 
+import { clsx, type ClassValue } from 'clsx'
+import { twMerge } from 'tailwind-merge'
 
-//import qs from 'query-string'
+import qs from 'query-string'
+
+export function formUrlQuery({
+  params,
+  key,
+  value,
+}: {
+  params: string
+  key: string
+  value: string | null
+}) {
+  const currentUrl = qs.parse(params)
+
+  currentUrl[key] = value
+
+  return qs.stringifyUrl(
+    {
+      url: window.location.pathname,
+      query: currentUrl,
+    },
+    { skipNull: true }
+  )
+}
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
-
-
 
 export const formatNumberWithDecimal = (num: number): string => {
   const [int, decimal] = num.toString().split('.')
@@ -24,14 +44,13 @@ export const toSlug = (text: string): string =>
     .replace(/^-+|-+$/g, '')
     .replace(/-+/g, '-')
 
-// CURRENCY_FORMATTER function
-  const CURRENCY_FORMATTER = new Intl.NumberFormat('en-US', {
-      currency: 'USD',
-      style: 'currency',
-      minimumFractionDigits: 2,
-    })
-    export function formatCurrency(amount: number) {
-      return CURRENCY_FORMATTER.format(amount)
+const CURRENCY_FORMATTER = new Intl.NumberFormat('en-US', {
+  currency: 'USD',
+  style: 'currency',
+  minimumFractionDigits: 2,
+})
+export function formatCurrency(amount: number) {
+  return CURRENCY_FORMATTER.format(amount)
 }
 
 const NUMBER_FORMATTER = new Intl.NumberFormat('en-US')
@@ -44,8 +63,6 @@ export const round2 = (num: number) =>
 
 export const generateId = () =>
   Array.from({ length: 24 }, () => Math.floor(Math.random() * 10)).join('')
-
-
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const formatError = (error: any): string => {
@@ -71,7 +88,6 @@ export const formatError = (error: any): string => {
       : JSON.stringify(error.message)
   }
 }
-
 
 export function calculateFutureDate(days: number) {
   const currentDate = new Date()
@@ -147,4 +163,39 @@ export const formatDateTime = (dateString: Date) => {
 
 export function formatId(id: string) {
   return `..${id.substring(id.length - 6)}`
+}
+
+export const getFilterUrl = ({
+  params,
+  category,
+  tag,
+  sort,
+  price,
+  rating,
+  page,
+}: {
+  params: {
+    q?: string
+    category?: string
+    tag?: string
+    price?: string
+    rating?: string
+    sort?: string
+    page?: string
+  }
+  tag?: string
+  category?: string
+  sort?: string
+  price?: string
+  rating?: string
+  page?: string
+}) => {
+  const newParams = { ...params }
+  if (category) newParams.category = category
+  if (tag) newParams.tag = toSlug(tag)
+  if (price) newParams.price = price
+  if (rating) newParams.rating = rating
+  if (page) newParams.page = page
+  if (sort) newParams.sort = sort
+  return `/search?${new URLSearchParams(newParams).toString()}`
 }

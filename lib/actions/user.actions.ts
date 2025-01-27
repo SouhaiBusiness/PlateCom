@@ -1,8 +1,8 @@
 'use server'
 
 import bcrypt from 'bcryptjs'
-import { signIn, signOut } from '@/auth'
-import { IUserSignIn, IUserSignUp } from '@/types'
+import { auth, signIn, signOut } from '@/auth'
+import { IUserName, IUserSignIn, IUserSignUp } from '@/types'
 //import { UserSignUpSchema, UserUpdateSchema } from '../validator'
 import { connectToDatabase } from '../db'
 import User from '../db/models/user.model'
@@ -70,7 +70,7 @@ export async function registerUser(userSignUp: IUserSignUp) {
   } catch (error) {
     return { success: false, message: formatError(error) }
   }
-}
+}*/}
 export async function updateUserName(user: IUserName) {
   try {
     await connectToDatabase()
@@ -87,7 +87,7 @@ export async function updateUserName(user: IUserName) {
   } catch (error) {
     return { success: false, message: formatError(error) }
   }
-}*/}
+}
 
 export async function signInWithCredentials(user: IUserSignIn) {
   return await signIn('credentials', { ...user, redirect: false })

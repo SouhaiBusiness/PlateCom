@@ -9,11 +9,11 @@ import Order, { IOrder } from '../db/models/order.model'
 import { revalidatePath } from 'next/cache'
 //import { sendAskReviewOrderItems, sendPurchaseReceipt } from '@/emails'
 //import { paypal } from '../paypal'
-//import { DateRange } from 'react-day-picker'
-//import Product from '../db/models/product.model'
-//import User from '../db/models/user.model'
+import { DateRange } from 'react-day-picker'
+import Product from '../db/models/product.model'
+import User from '../db/models/user.model'
 //import mongoose from 'mongoose'
-import { AVAILABLE_DELIVERY_DATES } from '../constants'
+import { AVAILABLE_DELIVERY_DATES, PAGE_SIZE } from '../constants'
 import { paypal } from '../paypal'
 import { sendPurchaseReceipt } from '@/emails'
 //import { getSetting } from './setting.actions'
@@ -227,7 +227,7 @@ export async function deleteOrder(id: string) {
     data: JSON.parse(JSON.stringify(orders)) as IOrderList[],
     totalPages: Math.ceil(ordersCount / limit),
   }
-}
+}*/}
 export async function getMyOrders({
   limit,
   page,
@@ -235,10 +235,7 @@ export async function getMyOrders({
   limit?: number
   page: number
 }) {
-  const {
-    common: { pageSize },
-  } = await getSetting()
-  limit = limit || pageSize
+  limit = limit || PAGE_SIZE
   await connectToDatabase()
   const session = await auth()
   if (!session) {
@@ -257,7 +254,9 @@ export async function getMyOrders({
     data: JSON.parse(JSON.stringify(orders)),
     totalPages: Math.ceil(ordersCount / limit),
   }
-} */}
+} 
+
+
 export async function getOrderById(orderId: string): Promise<IOrder> {
   await connectToDatabase()
   const order = await Order.findById(orderId)
@@ -330,7 +329,7 @@ export async function approvePayPalOrder(
 
 
 // GET ORDERS BY USER
-{/*export async function getOrderSummary(date: DateRange) {
+export async function getOrderSummary(date: DateRange) {
   await connectToDatabase()
 
   const ordersCount = await Order.countDocuments({
@@ -404,10 +403,10 @@ export async function approvePayPalOrder(
   const topSalesCategories = await getTopSalesCategories(date)
   const topSalesProducts = await getTopSalesProducts(date)
 
-  const {
-    common: { pageSize },
-  } = await getSetting()
-  const limit = pageSize
+  {/*const {
+    common: { PAGE_SIZE },
+  }  await getSetting()*/}
+  const limit = PAGE_SIZE
   const latestOrders = await Order.find()
     .populate('user', 'name')
     .sort({ createdAt: 'desc' })
@@ -544,4 +543,4 @@ async function getTopSalesCategories(date: DateRange, limit = 5) {
 
   return result
 }
- */}
+ 
