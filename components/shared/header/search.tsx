@@ -9,10 +9,10 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { APP_NAME } from '@/lib/constants'
-//import { getAllCategories } from '@/lib/actions/product.actions'
+import { getAllCategories } from '@/lib/actions/product.actions'
 
 export default async function Search() {
-  {/*const categories = await getAllCategories()*/}
+  const categories = await getAllCategories()
   return (
     <form action='/search' method='GET' className='flex  items-stretch h-10 '>
       <Select name='category'>
@@ -21,11 +21,11 @@ export default async function Search() {
         </SelectTrigger>
         <SelectContent position='popper'>
           <SelectItem value='all'>All</SelectItem>
-          {/*{categories.map((category) => (
+          {categories.map((category) => (
             <SelectItem key={category} value={category}>
               {category}
             </SelectItem>
-          ))}*/}
+          ))}
         </SelectContent>
       </Select>
       <Input
