@@ -42,7 +42,7 @@ export default async function AppLayout({
  
   const { locale } = await params
   // Ensure that the incoming `locale` is valid
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  
  
  // const messages = await getMessages()
 
