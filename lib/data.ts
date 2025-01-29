@@ -4,9 +4,9 @@ import bcrypt from 'bcryptjs'
 
 const users: IUserInput[] = [
    {
-    name: 'John',
-    email: 'admin@example.com',
-    password: bcrypt.hashSync('123456', 5),
+    name: 'Souhail',
+    email: 'souhail.admin@gmail.com',
+    password: bcrypt.hashSync('admin@S!platecom', 5),
     role: 'Admin',
     address: {
       fullName: 'John Doe',
