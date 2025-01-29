@@ -15,7 +15,7 @@ export default async function AuthLayout({
       <header className='mt-8'>
         <Link href='/'>
           <Image
-            src='/icons/ecommerce-svgrepo-com.svg'
+            src='/images/icons8-ecommerce-64(1).png'
             alt='logo'
             width={64}
             height={64}
