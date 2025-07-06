@@ -26,7 +26,7 @@ export default async function UserButton() {
           <div className='flex items-center'>
             <div className='flex flex-col text-xs text-left'>
               <span>
-                 Hello, {' '}  
+                 Hello! {' '}  
                 {session ? session.user.name : 'sign in'} 
               </span>
               <span className='font-bold'> Account & Orders </span>
