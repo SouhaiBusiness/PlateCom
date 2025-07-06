@@ -31,7 +31,7 @@ export default function CartButton() {
             {cartItemsCount}
           </span>
         )}
-        <span className='font-bold'>Cart</span>
+        <span className='font-bold'>Cart.</span>
 
 
         {isCartSidebarOpen && (
